@@ -12,7 +12,7 @@ import org.json.JSONObject;
  * A basic prototype to serve as the "back-end" of a skydive booking system. Input
  * and output is in JSON format.
  *
- * @author Matthew Perry
+ * @author Jibitesh Saha, z5280740
  *
  */
 
