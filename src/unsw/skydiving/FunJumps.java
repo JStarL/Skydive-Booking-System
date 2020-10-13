@@ -24,7 +24,7 @@ class FunJumps extends Jumps {
     private ArrayList<String> getSkydiverNames() {
         ArrayList<String> skydiverNames = new ArrayList<String>();
         for (Skydivers skydiver : skydivers) {
-            skydiverNames.add(skydiver.toString());
+            skydiverNames.add(skydiver.getName());
         }
 
         return skydiverNames;

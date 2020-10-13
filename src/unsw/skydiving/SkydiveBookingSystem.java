@@ -37,8 +37,11 @@ public class SkydiveBookingSystem {
 
     private void processCommand(JSONObject json) {
 
-        String id;
+        String id, type;
         LocalDateTime startTime, endTime;
+        ArrayList<String> divers;
+        JSONObject obj;
+        Jumps jump;
         switch (json.getString("command")) {
 
         case "flight":
@@ -66,8 +69,8 @@ public class SkydiveBookingSystem {
         case "request":
             id = json.getString("id");
             startTime = LocalDateTime.parse(json.getString("starttime"));
-            String type = json.getString("type");
-            ArrayList<String> divers = new ArrayList<String>();
+            type = json.getString("type");
+            divers = new ArrayList<String>();
             switch (type) {
                 case "fun":
                     JSONArray JSONdivers = json.getJSONArray("skydivers");
@@ -83,8 +86,8 @@ public class SkydiveBookingSystem {
                     break;
             }
 
-            JSONObject obj = new JSONObject();
-            Jumps jump = makeRequest(id, type, startTime, divers);
+            obj = new JSONObject();
+            jump = makeRequest(id, type, startTime, divers);
             if (jump != null) {
                 // Sucess JSON Object
                 Flights allocatedFlight = jump.getFlight();
@@ -105,7 +108,37 @@ public class SkydiveBookingSystem {
             break;
         
         case "change":
-            
+            id = json.getString("id");
+            startTime = LocalDateTime.parse(json.getString("starttime"));
+            type = json.getString("type");
+            divers = new ArrayList<String>();
+            switch (type) {
+                case "fun":
+                    JSONArray JSONdivers = json.getJSONArray("skydivers");
+                    divers.addAll(jsonArrayToStringsList(JSONdivers));
+                    break;
+                
+                case "tandem":
+                    divers.add(json.getString("passenger"));
+                    break;
+
+                case "training":
+                    divers.add(json.getString("trainee"));
+                    break;
+            }
+
+            obj = new JSONObject();
+            jump = changeRequest(id, type, startTime, divers);
+            if (jump != null) {
+                // Sucess JSON Object
+                Flights allocatedFlight = jump.getFlight();
+                obj.put("flight", allocatedFlight.getId());
+                obj.put("dropzone", allocatedFlight.getDropzoneName());
+                obj.put("status", "success");
+            } else {
+                // Failure JSON Object
+                obj.put("status", "rejected");
+            }
             break;
         
         case "jump-run":
@@ -116,7 +149,11 @@ public class SkydiveBookingSystem {
     }
 
     private ArrayList<String> jsonArrayToStringsList(JSONArray arr) {
-        return null;
+        ArrayList<String> strings = new ArrayList<String>();
+        for (int i = 0; i < arr.length(); i++) {
+            strings.add(arr.getString(i));
+        }
+        return strings;
     }
 
     private Dropzones addDropzone(String dropzoneName) {
@@ -154,7 +191,7 @@ public class SkydiveBookingSystem {
         }
 
         // DEBUG
-        System.out.println(flight);
+        // System.out.println(flight);
     }
 
     private void createSkydiver(String id, String license) {
@@ -210,7 +247,7 @@ public class SkydiveBookingSystem {
     private void addSkydiver(Skydivers skydiver) {
         skydivers.add(skydiver);
         // DEBUG
-        System.out.println(skydiver);
+        // System.out.println(skydiver);
     }
 
     private Dropzones getDropzone(String dropzoneName) {
@@ -250,33 +287,35 @@ public class SkydiveBookingSystem {
 
         */
 
-        ArrayList<Flights> possibleFlights = Flights.getFlightsOnDateFromTime(flights, start.toLocalDate(), start.toLocalTime());
 
         Jumps jump = null;
-        int numSkydivers = 0;
         boolean needTeacherAllocation = false;
         switch (type) {
             case "fun":
-                jump = new FunJumps(id, type, numSkydivers, arrayListofStringsToSkydivers(divers));
-                numSkydivers = divers.size();
+                jump = new FunJumps(id, type, divers.size(), arrayListofStringsToSkydivers(divers));
                 needTeacherAllocation = false;
                 break;
         
             case "tandem":
                 jump = new TandemJumps(id, type, 2, getSkydiver(divers.get(0)));
-                numSkydivers = 2;
                 needTeacherAllocation = true;
+                start = start.plusMinutes(5);
                 break;
 
             case "training":
                 jump = new TrainingJumps(id, type, 2, getSkydiver(divers.get(0)));
-                numSkydivers = 2;
                 needTeacherAllocation = true;
                 break;
         }
 
+
+        ArrayList<Flights> possibleFlights = Flights.getFlightsOnDateFromTime(flights, start.toLocalDate(), start.toLocalTime());
+
         Flights flight = determineBooking(jump, possibleFlights, needTeacherAllocation);
         
+        // DEBUG
+        // System.out.println(flight);
+
         if (flight != null) {
             // flight is free, can book
             bookJump(jump, flight);
@@ -290,6 +329,8 @@ public class SkydiveBookingSystem {
     private Flights determineBooking(Jumps jump, ArrayList<Flights> flights, boolean needTeacherAllocation) {
         TimeInterval flightDuration;
         boolean allSkydiversFree = true;
+        // DEBUG
+        // System.out.println(jump.getSkydivers().size());
         for (Flights flight : flights) {
             allSkydiversFree = true;
 
@@ -301,7 +342,7 @@ public class SkydiveBookingSystem {
 
             for(Skydivers skydiver : jump.getSkydivers()) {
                 
-                TimeInterval skydiverDuration = (TimeInterval) flightDuration.clone();
+                TimeInterval skydiverDuration = flightDuration.clone();
 
                 jump.adjustTimeInterval(skydiverDuration);
 
@@ -309,6 +350,9 @@ public class SkydiveBookingSystem {
                     skydiver.adjustTimeInterval(skydiverDuration);
                 }
 
+                // DEBUG
+                // System.out.println(skydiverDuration);
+                // skydiver.printBookings();
                 if (!skydiver.isSkydiverFree(skydiverDuration)) {
                     allSkydiversFree = false;
                     break;
@@ -328,7 +372,9 @@ public class SkydiveBookingSystem {
                 // always repack gear (10 minutes)
                 instructorInterval.adjustEndTime(10); 
 
-                Instructors teacher = flight.getDropzone().allocateTeacher(jump.getType(), instructorInterval);
+                Instructors teacher = flight.getDropzone().allocateTeacher(jump.getType(), instructorInterval, jump.getSkydivers().get(0));
+                // DEBUG
+                // System.out.println(teacher);
 
                 if (teacher == null) {
                     // fail current flight
@@ -442,18 +488,21 @@ public class SkydiveBookingSystem {
         return -1;
     }
 
-    private void changeRequest(String id, String type, LocalDateTime start, ArrayList<String> divers) {
+    private Jumps changeRequest(String id, String type, LocalDateTime start, ArrayList<String> divers) {
         
         Jumps initialRequest = getRequest(id);
 
-        if (initialRequest == null) {return;}
+        if (initialRequest == null) {return null;}
 
         int index = cancelRequest(initialRequest);
 
         Jumps newRequest = makeRequest(id, type, start, divers);
 
         if (newRequest == null) {
-            restoreRequest(initialRequest, index);            
+            restoreRequest(initialRequest, index);
+            return null;         
+        } else {
+            return newRequest;
         }
     }
 

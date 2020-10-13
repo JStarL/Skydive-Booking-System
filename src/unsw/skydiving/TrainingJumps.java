@@ -11,8 +11,8 @@ class TrainingJumps extends Jumps {
     @Override
     public JSONObject generateJumpRun() {
         JSONObject output = new JSONObject();
-        output.put("instructor", instructor.toString());
-        output.put("trainee", trainee.toString());
+        output.put("instructor", instructor.getName());
+        output.put("trainee", trainee.getName());
         return output;
     }
 
@@ -24,8 +24,12 @@ class TrainingJumps extends Jumps {
     @Override
     public ArrayList<Skydivers> getSkydivers() {
         ArrayList<Skydivers> skydivers = new ArrayList<Skydivers>(2);
-        skydivers.add(instructor);
-        skydivers.add(trainee);
+        if (instructor != null) {
+            skydivers.add(instructor);
+        }
+        if (trainee != null) {
+            skydivers.add(trainee);
+        }
         return skydivers;
     }
 

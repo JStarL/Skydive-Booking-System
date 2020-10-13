@@ -68,11 +68,13 @@ abstract class Jumps implements Comparable<Jumps> {
         TimeInterval interval = flight.getTimeInterval();
         adjustTimeInterval(interval); // wrt. current jump
         ArrayList<Skydivers> skydivers = getSkydivers();
+        // DEBUG
+        // System.out.println(skydivers.toString());
         for (Skydivers skydiver : skydivers) {
 
             TimeInterval t2 = interval.clone();
 
-            if (this.getClass() != TandemJumps.class && skydiver != ((TandemJumps) this).getPassenger()) {
+            if (!(this.getClass() == TandemJumps.class && skydiver == ((TandemJumps) this).getPassenger())) {
                 skydiver.adjustTimeInterval(t2);
             }
 

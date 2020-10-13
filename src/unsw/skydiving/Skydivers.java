@@ -70,6 +70,10 @@ class Skydivers implements Comparable<Skydivers> {
         return "name: " + name + ", license: " + license;
     }
     
+    public void printBookings() {
+        System.out.println("name: " + name + ", bookings: " + bookings.toString());
+    }
+
     public void adjustTimeInterval(TimeInterval t) {
         // Do nothing (Hires gear; doesn't repack)
         // A student will be instantiated as a skydiver

@@ -11,8 +11,8 @@ class TandemJumps extends Jumps {
     @Override
     public JSONObject generateJumpRun() {
         JSONObject output = new JSONObject();
-        output.put("jump-master", tandemMaster.toString());
-        output.put("passenger", passenger.toString());
+        output.put("jump-master", tandemMaster.getName());
+        output.put("passenger", passenger.getName());
         return output;
     }
 
@@ -24,8 +24,12 @@ class TandemJumps extends Jumps {
     @Override
     public ArrayList<Skydivers> getSkydivers() {
         ArrayList<Skydivers> skydivers = new ArrayList<Skydivers>(2);
-        skydivers.add(tandemMaster);
-        skydivers.add(passenger);
+        if (tandemMaster != null) {
+            skydivers.add(tandemMaster);
+        }
+        if (passenger != null) {
+            skydivers.add(passenger);
+        }
         return skydivers;
     }
 
