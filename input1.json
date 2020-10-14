@@ -1,0 +1,38 @@
+{ "command": "flight", "id": "flight1", "dropzone": "Picton", "starttime": "2007-12-02T14:40", "endtime": "2007-12-02T15:00", "maxload": 999 }
+{ "command": "flight", "id": "flight2", "dropzone": "Picton", "starttime": "2007-12-02T15:00", "endtime": "2007-12-02T15:20", "maxload": 999 }
+{ "command": "flight", "id": "flight3", "dropzone": "Picton", "starttime": "2007-12-02T15:05", "endtime": "2007-12-02T15:25", "maxload": 999 }
+{ "command": "flight", "id": "flight4", "dropzone": "Picton", "starttime": "2007-12-02T15:10", "endtime": "2007-12-02T15:30", "maxload": 999 }
+{ "command": "flight", "id": "flight5", "dropzone": "Picton", "starttime": "2007-12-02T15:15", "endtime": "2007-12-02T15:35", "maxload": 999 }
+
+{ "command": "skydiver", "skydiver": "Borat", "licence": "instructor", "dropzone": "Picton"}
+{ "command": "skydiver", "skydiver": "Bruno", "licence": "student"}
+
+{ "command": "skydiver", "skydiver": "Ashesh", "licence": "tandem-master", "dropzone": "Picton"}
+{ "command": "skydiver", "skydiver": "Lol", "licence": "student"}
+
+{ "command": "skydiver", "skydiver": "Matt", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "Wow", "licence": "student"}
+
+
+{ "command": "request", "type": "tandem", "id": "Initial Tandem", "starttime": "2007-12-02T14:00", "trainee": "Lol" }
+
+{ "command": "request", "type": "training", "id": "Initial Training", "starttime": "2007-12-02T14:00", "trainee": "Bruno" }
+
+{ "command": "request", "type": "fun", "id": "Initial Fun", "starttime": "2007-12-02T14:00", "skydivers": ["Matt", "Wow"] }
+
+
+{ "command": "request", "type": "fun", "id": "Student from Training jump wants fun, in 15 minutes", "starttime": "2007-12-02T15:00", "skydivers": ["Bruno"] }
+{ "command": "request", "type": "fun", "id": "Instructor from Training jump also has to repack gear, can't make it to any", "starttime": "2007-12-02T15:00", "skydivers": ["Borat"] }
+
+{ "command": "request", "type": "tandem", "id": "Both licnesed jumper and tandem master can make it, to 10 minutes after", "starttime": "2007-12-02T15:00", "trainee": "Matt" }
+
+{ "command": "request", "type": "fun", "id": "Student from Fun jump wants fun, immediately", "starttime": "2007-12-02T15:00", "skydivers": ["Wow"] }
+
+{ "command": "request", "type": "fun", "id": "Student, here Passenger, from Tandem jump wants fun, immediately", "starttime": "2007-12-02T15:00", "skydivers": ["Lol"] }
+
+{ "command": "jump-run", "id": "flight1" }
+{ "command": "jump-run", "id": "flight2" }
+{ "command": "jump-run", "id": "flight3" }
+{ "command": "jump-run", "id": "flight4" }
+{ "command": "jump-run", "id": "flight5" }
+
