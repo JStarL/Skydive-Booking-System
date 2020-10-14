@@ -5,8 +5,46 @@ import java.util.ArrayList;
 import org.json.JSONObject;
 
 class TandemJumps extends Jumps {
+    
+    /**
+     * The tandemMaster of this jump
+     */
     private TandemMasters tandemMaster;
+
+    /**
+     * The passenger of this jump
+     */
     private Skydivers passenger;
+
+    /**
+     * Constructor when flight and TandemMaster are unknown
+     * @param id
+     * @param type
+     * @param numJumpers
+     * @param passenger
+     */
+    public TandemJumps(String id, String type, int numJumpers, Skydivers passenger) {
+        super(id, type, numJumpers);
+        this.passenger = passenger;
+    }
+
+    // Getters and Setters
+
+    public TandemMasters getTandemMaster() {
+        return tandemMaster;
+    }
+
+    public void setTandemMaster(TandemMasters tandemMaster) {
+        this.tandemMaster = tandemMaster;
+    }
+
+    public Skydivers getPassenger() {
+        return passenger;
+    }
+
+    public void setPassenger(Skydivers passenger) {
+        this.passenger = passenger;
+    }
 
     @Override
     public JSONObject generateJumpRun() {
@@ -33,27 +71,10 @@ class TandemJumps extends Jumps {
         return skydivers;
     }
 
-    public TandemMasters getTandemMaster() {
-        return tandemMaster;
-    }
-
-    public void setTandemMaster(TandemMasters tandemMaster) {
-        this.tandemMaster = tandemMaster;
-    }
-
-    public Skydivers getPassenger() {
-        return passenger;
-    }
-
-    public void setPassenger(Skydivers passenger) {
-        this.passenger = passenger;
-    }
-
-    public TandemJumps(String id, String type, int numJumpers, Skydivers passenger) {
-        super(id, type, numJumpers);
-        this.passenger = passenger;
-    }
-
+    /**
+     * A String representation of this tandemJump.
+     * Easy for debugging prints :)
+     */
     @Override
     public String toString() {
         return super.toString() +

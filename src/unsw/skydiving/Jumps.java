@@ -284,7 +284,7 @@ abstract class Jumps implements Comparable<Jumps> {
     public int cancelJumpRelations() {
         
         // Return if no flight registered
-        if (flight == null) {return;}
+        if (flight == null) {return -1;}
         
         // Reduce the current flight load
         flight.subtractCurrentLoad(numJumpers);
