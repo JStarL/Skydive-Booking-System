@@ -26,6 +26,7 @@ class TrainingJumps extends Jumps {
     public TrainingJumps(String id, String type, int numJumpers, Skydivers trainee) {
         super(id, type, numJumpers);
         this.trainee = trainee;
+        this.instructor = null;
     }
 
     /**

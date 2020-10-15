@@ -26,6 +26,7 @@ class TandemJumps extends Jumps {
     public TandemJumps(String id, String type, int numJumpers, Skydivers passenger) {
         super(id, type, numJumpers);
         this.passenger = passenger;
+        this.tandemMaster = null;
     }
 
     // Getters and Setters

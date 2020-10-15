@@ -1,7 +1,7 @@
 package unsw.skydiving;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Dropzones {
     
@@ -24,7 +24,7 @@ public class Dropzones {
      * Standard constructor
      * @param name name of dropzone
      */
-    Dropzones(String name) {
+    public Dropzones(String name) {
         this.name = name;
         vacancies = 0;
         instructors = new ArrayList<>();
@@ -65,6 +65,29 @@ public class Dropzones {
         instructors.add(teacher);
     }
 
+    private ArrayList<Instructors> sortByNumJumpsOnDate(LocalDate date) {
+        ArrayList<Instructors> allInstructors = (ArrayList<Instructors>) instructors.clone();
+        ArrayList<Instructors> sortedInstructors = new ArrayList<Instructors>();
+
+        while (allInstructors.size() > 0) {
+            int minJumps = Integer.MAX_VALUE; 
+            Instructors tmp = null;
+            int compare = -1;         
+            
+            for (Instructors instructor : allInstructors) {
+                if ((compare = instructor.getNumJumpsOnDate(date)) < minJumps) {
+                    minJumps = compare;
+                    tmp = instructor;
+                }
+            }
+            
+            sortedInstructors.add(tmp);
+            allInstructors.remove(tmp);
+        }
+
+        return sortedInstructors;
+    }
+
     /**
      * Allocates a teacher during the given TimeInterval for
      * the given jump type
@@ -74,15 +97,16 @@ public class Dropzones {
      * @return Allocated Instructor
      */
     public Instructors allocateTeacher(String jumpType, TimeInterval t, Skydivers student) {
-        // Sorting such that instructors with fewer jumps preferred
-        Collections.sort(instructors);
+        
+        // Sorting such that instructors with fewer jumps on the date preferred
+        ArrayList<Instructors> sortedInstructors = sortByNumJumpsOnDate(t.getDate());
 
         switch (jumpType) {
             case "training":
-                return allocateInstructor(t, student);
+                return allocateInstructor(t, student, sortedInstructors);
 
             case "tandem":
-                return allocateTandemMaster(t, student);
+                return allocateTandemMaster(t, student, sortedInstructors);
 
         }
 
@@ -95,8 +119,8 @@ public class Dropzones {
      * @param student The teacher should not be this student!
      * @return allocated instructor
      */
-    private Instructors allocateInstructor(TimeInterval t, Skydivers student) {
-        for (Instructors instructor : instructors) {
+    private Instructors allocateInstructor(TimeInterval t, Skydivers student, ArrayList<Instructors> sortedInstructors) {
+        for (Instructors instructor : sortedInstructors) {
             if (instructor.isSkydiverFree(t) &&
                 !instructor.getName().equals(student.getName())) {
                 return instructor;
@@ -112,8 +136,8 @@ public class Dropzones {
      * @param student The teacher should not be this student!
      * @return allocated tandemMaster
      */
-    private Instructors allocateTandemMaster(TimeInterval t, Skydivers student) {
-        for (Instructors instructor : instructors) {
+    private Instructors allocateTandemMaster(TimeInterval t, Skydivers student, ArrayList<Instructors> sortedInstructors) {
+        for (Instructors instructor : sortedInstructors) {
             if (instructor.getClass() != TandemMasters.class) {
                 continue;
             }

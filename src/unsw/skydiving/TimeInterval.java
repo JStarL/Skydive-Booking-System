@@ -42,6 +42,31 @@ public class TimeInterval implements Comparable<TimeInterval> {
         this.end = dateTime.toLocalTime();
     }
 
+    // Getters
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getStart() {
+        return start;
+    }
+
+    public void setStart(LocalTime start) {
+        this.start = start;
+    }
+
+    public LocalTime getEnd() {
+        return end;
+    }
+
+    public void setEnd(LocalTime end) {
+        this.end = end;
+    }
+
     /**
      * Checks whether this interval overlaps with the given TimeInterval
      * @param interval TimeInterval object to be checked against
@@ -97,7 +122,6 @@ public class TimeInterval implements Comparable<TimeInterval> {
             return compareToValue;
         }
 
-        // Collections.sort() is a Stable Sort
         // If two flight times have t1.compareTo(t2) = 0
         // Then the flight which was registered first
         // will remain before
@@ -174,7 +198,7 @@ public class TimeInterval implements Comparable<TimeInterval> {
     }
 
     /**
-     * A String representation of a TimeInterval.
+     * A String representation of this TimeInterval.
      * Easy for debugging prints :)
      */
     @Override

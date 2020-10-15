@@ -1,9 +1,9 @@
 package unsw.skydiving;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,10 +21,26 @@ import org.json.JSONObject;
 
 public class SkydiveBookingSystem {
 
-    ArrayList<Flights> flights;
-    ArrayList<Skydivers> skydivers;
-    ArrayList<Dropzones> dropzones;
-    ArrayList<Jumps> jumps;
+    /**
+     * List of flights in the booking system.
+     */
+    private ArrayList<Flights> flights;
+
+    /**
+     * List of skydivers in the booking system.
+     */
+    private ArrayList<Skydivers> skydivers;
+
+    /**
+     * List of dropzones in the booking system.
+     */
+    private ArrayList<Dropzones> dropzones;
+    
+    /**
+     * List of jumps in the booking system.
+     */
+    private ArrayList<Jumps> jumps;
+    
     /**
      * Constructs a skydive booking system. Initially, the system contains no flights, skydivers, jumps or dropzones
      */
@@ -35,6 +51,165 @@ public class SkydiveBookingSystem {
         jumps = new ArrayList<Jumps>();
     }
 
+    // Getters and Setters
+
+    /**
+     * Given a flightId, reutrns corresponding Flight
+     * reference
+     * @param flightId id of flight
+     * @return Flights reference to the flight
+     */
+    private Flights getFlight(String flightId) {
+        for (Flights flight : flights) {
+            if (flight.getId().equals(flightId)) {
+                return flight;       
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Given the name of a dropzone, return a Dropzones
+     * reference to the same from the system's list of Dropzones
+     * @param dropzoneName name of Dropzone
+     * @return Dropzones whose name was provided
+     */
+    private Dropzones getDropzone(String dropzoneName) {
+        for (Dropzones dropzone : dropzones) {
+            if(dropzone.getName().equals(dropzoneName)) {
+                return dropzone;
+            }
+        }
+
+        return null;
+    }
+
+/**
+     * Given the id of a Jump request,
+     * return the corresponding Jump object,
+     * or null if not found
+     * @param id id of jump object
+     * @return jump reference, or null if not found
+     */
+    private Jumps getRequest(String id) {
+        for (Jumps j : jumps) {
+            if (j.getId().equals(id)) {
+                return j;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the skydiver whose name is given, null if
+     * not found
+     * @param name name of skydiver
+     * @return Sydivers reference with given name,
+     * null if not found
+     */
+    private Skydivers getSkydiver(String name) {
+        for (Skydivers s : skydivers) {
+            if (s.getName().equals(name)) {
+                return s;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Uses the given name to create a dropzone,
+     * and returns the reference to created dropzone
+     * @param dropzoneName name of Dropzone to be created
+     * @return Dropzone reference of created object
+     */
+    private Dropzones addDropzone(String dropzoneName) {
+        Dropzones dropzone = new Dropzones(dropzoneName);
+        dropzones.add(dropzone);
+        return dropzone;
+    }
+
+    /**
+     * Adds the given flight to the booking system's
+     * list of flights. NOTE: Flights are inserted in
+     * chronological order. If two flights have the same date
+     * and start time, the flight which was registered earlier will
+     * remain before
+     * @param flight flight to add to flights list
+     */
+    private void addFlight(Flights flight) {
+        
+        flights.add(flight);
+        Collections.sort(flights);
+
+    }
+
+    /**
+     * Adds skydiver to this booking system's list of skydivers
+     * @param skydiver skydiver to be added
+     */
+    private void addSkydiver(Skydivers skydiver) {
+        skydivers.add(skydiver);
+    }
+
+    /**
+     * Removes jump with given id from this
+     * booking system's list of jumps. Returns index
+     * from which jump was removed
+     * @param id id of jump
+     * @return index of removal, -1 if jump not found
+     */
+    private int removeJump(String id) {
+        for (int i = 0; i < jumps.size(); i++) {
+            if (jumps.get(i).getId().equals(id)) {
+                jumps.remove(i);
+                return i;
+            }
+        }
+        // jump not found
+        return -1;
+    }
+
+    /**
+     * Convert given JSONArray to an array of Strings
+     * @param arr
+     * @return ArrayList<String> corresponding to JSONArray
+     */
+    private ArrayList<String> jsonArrayToStringsList(JSONArray arr) {
+        ArrayList<String> strings = new ArrayList<String>();
+        for (int i = 0; i < arr.length(); i++) {
+            strings.add(arr.getString(i));
+        }
+        return strings;
+    }
+
+    /**
+     * Converts an ArrayList of Skydiver name to the corresponding
+     * list of Skydiver references
+     * @param strings List of Skydiver names
+     * @return List of Skydiver references
+     */
+    private ArrayList<Skydivers> arrayListofStringsToSkydivers(ArrayList<String> strings) {
+        ArrayList<Skydivers> divers = new ArrayList<Skydivers>();
+        Skydivers tmp = null;
+        for (String skydiverName : strings) {
+            tmp = getSkydiver(skydiverName);
+            if (tmp != null) {
+                divers.add(tmp);
+            }
+        }
+        return divers;
+    }
+
+
+    /**
+     * Given the JSONObject input from stdin,
+     * process it, and make the corresponding updates
+     * in the system. Finally, output details of success / 
+     * failure (for request, change and jump-run).
+     * @param json the input JSONObject
+     */
     private void processCommand(JSONObject json) {
 
         String id, type;
@@ -71,6 +246,7 @@ public class SkydiveBookingSystem {
             startTime = LocalDateTime.parse(json.getString("starttime"));
             type = json.getString("type");
             divers = new ArrayList<String>();
+            
             switch (type) {
                 case "fun":
                     JSONArray JSONdivers = json.getJSONArray("skydivers");
@@ -88,11 +264,12 @@ public class SkydiveBookingSystem {
 
             obj = new JSONObject();
             jump = makeRequest(id, type, startTime, divers);
+            
             if (jump != null) {
                 // Sucess JSON Object
                 Flights allocatedFlight = jump.getFlight();
                 obj.put("flight", allocatedFlight.getId());
-                obj.put("dropzone", allocatedFlight.getDropzoneName());
+                obj.put("dropzone", allocatedFlight.getDropzone().getName());
                 obj.put("status", "success");
             } else {
                 // Failure JSON Object
@@ -133,12 +310,14 @@ public class SkydiveBookingSystem {
                 // Sucess JSON Object
                 Flights allocatedFlight = jump.getFlight();
                 obj.put("flight", allocatedFlight.getId());
-                obj.put("dropzone", allocatedFlight.getDropzoneName());
+                obj.put("dropzone", allocatedFlight.getDropzone().getName());
                 obj.put("status", "success");
             } else {
                 // Failure JSON Object
                 obj.put("status", "rejected");
             }
+            
+            System.out.println(obj.toString());
             break;
         
         case "jump-run":
@@ -148,20 +327,14 @@ public class SkydiveBookingSystem {
         }
     }
 
-    private ArrayList<String> jsonArrayToStringsList(JSONArray arr) {
-        ArrayList<String> strings = new ArrayList<String>();
-        for (int i = 0; i < arr.length(); i++) {
-            strings.add(arr.getString(i));
-        }
-        return strings;
-    }
-
-    private Dropzones addDropzone(String dropzoneName) {
-        Dropzones dropzone = new Dropzones(dropzoneName);
-        dropzones.add(dropzone);
-        return dropzone;
-    }
-
+    /**
+     * Create a Flight using provided details
+     * @param id id of Flight to be created
+     * @param dropzone name of Dropzone hosting the flight
+     * @param start the LocalDateTime of the start of the flight
+     * @param end the LocalDateTime of the end of the flight
+     * @param maxload the maximum load the flight can take
+     */
     private void createFlight(String id, String dropzone, LocalDateTime start, LocalDateTime end, int maxload) {
         
         // Get dropzone if exists
@@ -175,27 +348,18 @@ public class SkydiveBookingSystem {
 
     }
 
-    private void addFlight(Flights flight) {
-        
-        boolean inserted = false;
-        for (int i = 0; i < flights.size(); i++) {
-            if (flights.get(i).compareTo(flight) > 0) {
-                flights.add(i, flight);
-                inserted = true;
-                break;
-            }
-        }
 
-        if (!inserted) {
-            flights.add(flight);
-        }
-
-        // DEBUG
-        // System.out.println(flight);
-    }
-
+    /**
+     * Creates a Skydiver using given id and license.
+     * This version is for:
+     * <ul>
+     * <li> Students (Skydivers, no special treatment), and </li> 
+     * <li> Licensed Jumpers </li>
+     * </ul>
+     * @param id
+     * @param license "student" or "licenced-jumper"
+     */
     private void createSkydiver(String id, String license) {
-        // Version for students and licensed-jumpers
         Skydivers skydiver = null;
         switch (license) {
             case "student":
@@ -214,6 +378,18 @@ public class SkydiveBookingSystem {
         addSkydiver(skydiver);
     }
 
+    /**
+     * Creates an Instructor using given id, license and
+     * home dropzone.
+     * This overloaded version is for:
+     * <ul>
+     * <li> Instructors, and </li> 
+     * <li> Tandem Masters </li>
+     * </ul>
+     * @param id
+     * @param license "student" or "licenced-jumper"
+     * @param dropzone name of home dropzone of skydiver
+     */
     private void createSkydiver(String id, String license, String dropzone) {
         // Version for instructors and tandem-masters
         
@@ -244,30 +420,20 @@ public class SkydiveBookingSystem {
         addSkydiver(teacher);
     }
 
-    private void addSkydiver(Skydivers skydiver) {
-        skydivers.add(skydiver);
-        // DEBUG
-        // System.out.println(skydiver);
-    }
-
-    private Dropzones getDropzone(String dropzoneName) {
-        for (Dropzones dropzone : dropzones) {
-            if(dropzone.getName().equals(dropzoneName)) {
-                return dropzone;
-            }
-        }
-
-        return null;
-    }
-
-    private ArrayList<Skydivers> arrayListofStringsToSkydivers(ArrayList<String> strings) {
-        ArrayList<Skydivers> divers = new ArrayList<Skydivers>();
-        for (String skydiverName : strings) {
-            divers.add(getSkydiver(skydiverName));
-        }
-        return divers;
-    }
-
+    /**
+     * Make a request for a jump, by specifying:
+     * <ul>
+     * <li> Type of jump </li>
+     * <li> Starting Date & Time  of Availability </li>
+     * <li> A list of divers </li>
+     * </ul>
+     * @param id
+     * @param type "fun", "tandem", or "training"
+     * @param start a LocalDateTime representing the 
+     * @param divers String List of skydiver names
+     * @return The jump object as the result of the request,
+     * or null if the request failed
+     */
     private Jumps makeRequest(String id, String type, LocalDateTime start, ArrayList<String> divers) {
         /* STEPS:
             1. Get Flights on given date from given time
@@ -279,11 +445,11 @@ public class SkydiveBookingSystem {
                     p. Use dropzone to decide
                     q. Identify instructor with least jumps
                     r. Check availability of instructor
-                d. Update system, for booking - or fail & reject
-                    p. Add load to flight
-                    q. Add booking to all skydivers
-                    f. increment numJumps for skydivers
-                e. Output status and JSON object
+            3. Update system, for booking - or fail & reject
+                a. Add load to flight
+                b. Add booking to all skydivers
+                c. increment numJumps for skydivers
+                d. Output status and JSON object
 
         */
 
@@ -299,6 +465,9 @@ public class SkydiveBookingSystem {
             case "tandem":
                 jump = new TandemJumps(id, type, 2, getSkydiver(divers.get(0)));
                 needTeacherAllocation = true;
+                // Since a 5 minute briefing session is necessary
+                // Actual starting point for looking for flights
+                // is 5 minutes later
                 start = start.plusMinutes(5);
                 break;
 
@@ -308,8 +477,10 @@ public class SkydiveBookingSystem {
                 break;
         }
 
-
         ArrayList<Flights> possibleFlights = Flights.getFlightsOnDateFromTime(flights, start.toLocalDate(), start.toLocalTime());
+
+        // DEBUG
+        // System.out.println(possibleFlights.size());
 
         Flights flight = determineBooking(jump, possibleFlights, needTeacherAllocation);
         
@@ -326,55 +497,53 @@ public class SkydiveBookingSystem {
         }
     }
 
+    /**
+     * Given a Jump and a list of possible flights to be allocated,
+     * decides which flight to choose and returns it. Also checks for
+     * and allocates a teacher if necessary
+     * @param jump the jump object which needs allocation
+     * @param flights a list of possible flights
+     * @param needTeacherAllocation is teacher allocation necessary?
+     * @return
+     */
     private Flights determineBooking(Jumps jump, ArrayList<Flights> flights, boolean needTeacherAllocation) {
         TimeInterval flightDuration;
-        boolean allSkydiversFree = true;
-        // DEBUG
-        // System.out.println(jump.getSkydivers().size());
+
         for (Flights flight : flights) {
-            allSkydiversFree = true;
 
             if(!flight.hasExtraCapacity(jump.getNumJumpers())) {
                 continue;
             }
 
-            flightDuration = flight.getTimeInterval();
+            flightDuration = flight.getTimeInterval().clone();
+            // Adjusted to include briefing / debriefing timings
+            jump.adjustTimeInterval(flightDuration);
 
             for(Skydivers skydiver : jump.getSkydivers()) {
                 
                 TimeInterval skydiverDuration = flightDuration.clone();
 
-                jump.adjustTimeInterval(skydiverDuration);
-
+                // If this is a tandem jump, skydiver will be 
+                // a passenger, since tandem master hasn't been allocated yet
                 if (jump.getClass() != TandemJumps.class) {
                     skydiver.adjustTimeInterval(skydiverDuration);
                 }
 
-                // DEBUG
-                // System.out.println(skydiverDuration);
-                // skydiver.printBookings();
+                // If this skydiver is not free, check next flight
                 if (!skydiver.isSkydiverFree(skydiverDuration)) {
-                    allSkydiversFree = false;
-                    break;
+                    continue;
                 }
             }
 
-            if (!allSkydiversFree) {
-                continue;
-            }
-            
             if (needTeacherAllocation) {
-                TimeInterval instructorInterval = (TimeInterval) flightDuration.clone();
+                TimeInterval instructorInterval = flightDuration.clone();
 
-                jump.adjustTimeInterval(instructorInterval);
                 // Instructos and tandem masters in
                 // training and tandem jumps respectively
                 // always repack gear (10 minutes)
                 instructorInterval.adjustEndTime(10); 
 
                 Instructors teacher = flight.getDropzone().allocateTeacher(jump.getType(), instructorInterval, jump.getSkydivers().get(0));
-                // DEBUG
-                // System.out.println(teacher);
 
                 if (teacher == null) {
                     // fail current flight
@@ -392,71 +561,27 @@ public class SkydiveBookingSystem {
         return null;
     }
 
-    /*
-    private void adjustTimeInterval(TimeInterval t, Jumps jump, Skydivers skydiver) {
-        
-        adjustTimeIntervalJumps(t, jump);
-
-        if (jump.getClass() == FunJumps.class) {
-            skydiver.adjustTimeInterval(t);
-
-        } else if (jump.getClass() == TandemJumps.class) {
-            // if skydiver is passenger, don't adjust time interval
-
-            if (((TandemJumps)jump).getPassenger() != skydiver) {
-                skydiver.adjustTimeInterval(t);
-            }
-        } else if (jump.getClass() == TrainingJumps.class) {
-            skydiver.adjustTimeInterval(t);
-
-        }
-
-    }
-    */
-
-    /*
-    private void adjustTimeIntervalJumps(TimeInterval t, Jumps jump) {
-        if (jump.getClass() == FunJumps.class) {
-
-        } else if (jump.getClass() == TandemJumps.class) {
-            TandemJumps.adjustTimeInterval(t);
-
-        } else if (jump.getClass() == TrainingJumps.class) {
-            TrainingJumps.adjustTimeInterval(t);
-
-        }
-    }
-    */
-
+    /**
+     * Update booking system to book the jump, i.e.
+     * form connections between jump, flight, Skydivers
+     * and TimeIntervals
+     * @param jump jump to be booked
+     * @param flight flight to be booked
+     */
     private void bookJump(Jumps jump, Flights flight) {
         jump.setFlight(flight);
         jump.makeJumpRelations();
         jumps.add(jump);
 
-        // DEBUG
-        // System.out.println(jump);
     }
 
-    private Jumps getRequest(String id) {
-        for (Jumps j : jumps) {
-            if (j.getId().equals(id)) {
-                return j;
-            }
-        }
-
-        return null;
-    }
-
-    private Skydivers getSkydiver(String name) {
-        for (Skydivers s : skydivers) {
-            if (s.getName().equals(name)) {
-                return s;
-            }
-        }
-
-        return null;
-    }
-
+    /**
+     * Cancels the request (i.e. jump) with given id.
+     * Return the index in the jumps list of this booking
+     * sysem from which it was removed, for restoration
+     * @param id id of Jump
+     * @return
+     */
     private int cancelRequest(String id) {
         /* STEPS:
             1. Get Jump object;
@@ -475,51 +600,65 @@ public class SkydiveBookingSystem {
         
     }
 
+    /**
+     * Overloaded version of cancelRequest(String id),
+     * cancelling directly using given jump reference
+     * @param jump jump to be removed
+     * @return index in this system's jump list from which
+     * jump was removed, otherwise -1
+     */
     private int cancelRequest(Jumps jump) {
         jump.cancelJumpRelations();
-        
-        for (int i = 0; i < jumps.size(); i++) {
-            if (jumps.get(i) == jump) {
-                jumps.remove(i);
-                return i;
-            }
-        }
-
-        return -1;
+        return removeJump(jump.getId());
     }
 
+    /**
+     * Changes request whose id is given, by cancelling given request,
+     * and then making a new request using new details.
+     * If the new request fails, restores old request
+     * @param id id of request (i.e. jump)
+     * @param type type of jump
+     * @param start start of jump
+     * @param divers skydivers int he jump
+     * @return new Jumps object (i.e. request), 
+     * or null if the change failed
+     */
     private Jumps changeRequest(String id, String type, LocalDateTime start, ArrayList<String> divers) {
         
         Jumps initialRequest = getRequest(id);
 
         if (initialRequest == null) {return null;}
 
-        int index = cancelRequest(initialRequest);
+        // First, cancel request
+        int indexInFlights = initialRequest.cancelJumpRelations();
+        int indexInSystem = removeJump(id);
 
+        // Next, try to make request
         Jumps newRequest = makeRequest(id, type, start, divers);
 
+        // if new request failed, restore previous
         if (newRequest == null) {
-            restoreRequest(initialRequest, index);
+            initialRequest.makeJumpRelations(indexInFlights);
+            jumps.add(indexInSystem, initialRequest);
             return null;         
         } else {
             return newRequest;
         }
     }
 
-    private void restoreRequest(Jumps jump, int index) {
-        jump.makeJumpRelations();
-        jumps.add(index, jump);
-
-    }
-
+    /**
+     * Prints the jump-run associated with flight
+     * having given flightId, after generating its
+     * JSONArray
+     * @param flightId id of flight whose jump-run
+     * is to be printed
+     */
     private void printJumpRun(String flightId) {
-        for (Flights flight : flights) {
-            if (flight.getId().equals(flightId)) {
-                JSONArray flightArray = flight.generateFlightRuns();
-                System.out.println(flightArray.toString());
-                break;
-            }
-        }
+        Flights flight = getFlight(flightId);
+        if (flight == null) {return;}
+        
+        JSONArray flightArray = flight.generateFlightRuns();
+        System.out.println(flightArray.toString());
     }
 
     public static void main(String[] args) {
@@ -538,3 +677,4 @@ public class SkydiveBookingSystem {
     }
 
 }
+

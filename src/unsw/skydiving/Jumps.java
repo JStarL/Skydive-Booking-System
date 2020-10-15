@@ -244,8 +244,8 @@ abstract class Jumps implements Comparable<Jumps> {
         flight.addCurrentLoad(numJumpers);
 
         // Make bookings for each skydiver
-        TimeInterval interval = flight.getTimeInterval();
-        // Asjust TimeInterval according to current jump type
+        TimeInterval interval = flight.getTimeInterval().clone();
+        // Adjust TimeInterval according to current jump type
         adjustTimeInterval(interval);
 
         ArrayList<Skydivers> skydivers = getSkydivers();
@@ -295,9 +295,11 @@ abstract class Jumps implements Comparable<Jumps> {
         // Clear bookings for each skydiver
 
         // Get flight duration
-        TimeInterval interval = flight.getTimeInterval();
+        TimeInterval interval = flight.getTimeInterval().clone();
 
+        // Get all skydivers associated with this jump
         ArrayList<Skydivers> skydivers = getSkydivers();
+
         for (Skydivers skydiver : skydivers) {
             skydiver.cancelBooking(interval);
         }

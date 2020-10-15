@@ -249,6 +249,8 @@ public class Flights implements Comparable<Flights> {
         // Create starting point
         TimeInterval t = new TimeInterval(date, time, time);
         for (Flights f : allFlights) {
+            // DEBUG
+            // System.out.println(f);
             if (f.interval.compareTo(t) < 0) { 
                 // f is before starting point
                 continue;

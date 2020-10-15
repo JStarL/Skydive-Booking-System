@@ -1,5 +1,6 @@
 package unsw.skydiving;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -56,6 +57,18 @@ class Skydivers implements Comparable<Skydivers> {
         return license;
     }
 
+    /**
+     * @return the numJumps
+     */
+    public int getNumJumpsOnDate(LocalDate date) {
+        int num = 0;
+        for (TimeInterval booking : bookings) {
+            if (booking.compareDate(date) == 0) {
+                num++;
+            }
+        }
+        return num;
+    }
     /**
      * A String representation of this skydiver.
      * Easy for debugging prints :)
@@ -127,7 +140,7 @@ class Skydivers implements Comparable<Skydivers> {
     }
 
     /**
-     * Adjusts given imeInterval based on current object
+     * Adjusts given TimeInterval based on current object
      * type - i.e. skydiver. Students get instantiated as
      * skydivers, and as such no adjustments take place.
      * NOTE however, subclasses do cause changes
