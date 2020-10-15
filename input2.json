@@ -1,0 +1,35 @@
+{ "command": "flight", "id": "flight1", "dropzone": "Picton", "starttime": "2007-12-02T14:00", "endtime": "2007-12-02T14:30", "maxload": 1 }
+{ "command": "flight", "id": "flight2", "dropzone": "Picton", "starttime": "2007-12-02T15:00", "endtime": "2007-12-02T15:30", "maxload": 4 }
+{ "command": "flight", "id": "flight3", "dropzone": "Picton", "starttime": "2007-12-02T16:00", "endtime": "2007-12-02T16:30", "maxload": 3 }
+{ "command": "flight", "id": "flight4", "dropzone": "Picton", "starttime": "2007-12-02T17:00", "endtime": "2007-12-02T17:30", "maxload": 1 }
+{ "command": "flight", "id": "flight5", "dropzone": "Picton", "starttime": "2007-12-02T18:00", "endtime": "2007-12-02T18:30", "maxload": 2 }
+
+{ "command": "skydiver", "skydiver": "Borat", "licence": "instructor", "dropzone": "Picton"}
+{ "command": "skydiver", "skydiver": "Bruno", "licence": "student"}
+
+{ "command": "skydiver", "skydiver": "Ashesh", "licence": "tandem-master", "dropzone": "Picton"}
+{ "command": "skydiver", "skydiver": "Lol", "licence": "student"}
+
+{ "command": "skydiver", "skydiver": "Matt", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "Wow", "licence": "student"}
+
+{ "command": "request", "type": "fun", "id": "There is space for 3 on flight2, not flight1", "starttime": "2007-12-02T14:00", "skydivers": ["Matt", "Wow", "Ashesh"] }
+{ "command": "jump-run", "id": "flight2" }
+
+{ "command": "request", "type": "tandem", "id": "Lol wants tandem, there is space on flight3", "starttime": "2007-12-02T14:00", "passenger": "Lol" }
+{ "command": "jump-run", "id": "flight3" }
+
+{ "command": "request", "type": "training", "id": "Bruno needs training, but there is space only on the last flight, i.e. flight5", "starttime": "2007-12-02T14:00", "trainee": "Bruno" }
+{ "command": "jump-run", "id": "flight5" }
+
+{ "command": "request", "type": "fun", "id": "Matt, Wow and Ashesh want to go again, but there is no space for 3 anymore!", "starttime": "2007-12-02T14:00", "skydivers": ["Matt", "Wow", "Ashesh"] }
+
+{ "command": "request", "type": "training", "id": "Wow wants training, but there is no space left!", "starttime": "2007-12-02T14:00", "trainee": "Bruno" }
+
+{ "command": "jump-run", "id": "flight1" }
+{ "command": "jump-run", "id": "flight2" }
+{ "command": "jump-run", "id": "flight3" }
+{ "command": "jump-run", "id": "flight4" }
+{ "command": "jump-run", "id": "flight5" }
+
+
