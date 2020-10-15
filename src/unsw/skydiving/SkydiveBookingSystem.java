@@ -110,6 +110,7 @@ public class SkydiveBookingSystem {
      */
     private Skydivers getSkydiver(String name) {
         for (Skydivers s : skydivers) {
+            if (s == null) {continue;}
             if (s.getName().equals(name)) {
                 return s;
             }
@@ -143,14 +144,6 @@ public class SkydiveBookingSystem {
         flights.add(flight);
         Collections.sort(flights);
 
-    }
-
-    /**
-     * Adds skydiver to this booking system's list of skydivers
-     * @param skydiver skydiver to be added
-     */
-    private void addSkydiver(Skydivers skydiver) {
-        skydivers.add(skydiver);
     }
 
     /**
@@ -375,7 +368,7 @@ public class SkydiveBookingSystem {
                 break;
         }
 
-        addSkydiver(skydiver);
+        skydivers.add(skydiver);
     }
 
     /**
@@ -417,7 +410,7 @@ public class SkydiveBookingSystem {
 
         flightDropzone.addInstructor(teacher);
 
-        addSkydiver(teacher);
+        skydivers.add(teacher);
     }
 
     /**
