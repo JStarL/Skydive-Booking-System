@@ -1,0 +1,38 @@
+{ "command": "flight", "id": "flight1", "dropzone": "Picton", "starttime": "2007-12-02T14:00", "endtime": "2007-12-02T14:30", "maxload": 999 }
+{ "command": "flight", "id": "flight2", "dropzone": "Picton", "starttime": "2007-12-02T14:40", "endtime": "2007-12-02T15:00", "maxload": 999 }
+{ "command": "flight", "id": "flight3", "dropzone": "Picton", "starttime": "2007-12-02T14:45", "endtime": "2007-12-02T15:00", "maxload": 999 }
+{ "command": "flight", "id": "flight4", "dropzone": "Picton", "starttime": "2007-12-02T15:05", "endtime": "2007-12-02T15:30", "maxload": 999 }
+{ "command": "flight", "id": "flight5", "dropzone": "Picton", "starttime": "2007-12-02T15:10", "endtime": "2007-12-02T15:30", "maxload": 999 }
+
+{ "command": "skydiver", "skydiver": "Borat", "licence": "instructor", "dropzone": "Picton"}
+{ "command": "skydiver", "skydiver": "Bruno", "licence": "student"}
+
+{ "command": "skydiver", "skydiver": "Ashesh", "licence": "tandem-master", "dropzone": "Picton"}
+{ "command": "skydiver", "skydiver": "Lol", "licence": "student"}
+
+{ "command": "skydiver", "skydiver": "Matt", "licence": "tandem-master"}
+{ "command": "skydiver", "skydiver": "Wow", "licence": "student"}
+
+{ "command": "skydiver", "skydiver": "TheTeacher", "licence": "instructor", "dropzone": "Picton"}
+{ "command": "skydiver", "skydiver": "omg", "licence": "student"}
+
+
+{ "command": "request", "type": "tandem", "id": "Lol wants tandem, finished at 2:30", "starttime": "2007-12-02T13:30", "passenger": "Lol" }
+{ "command": "jump-run", "id": "flight1" }
+
+{ "command": "request", "type": "training", "id": "Bruno wants training, also finishes at 2:30", "starttime": "2007-12-02T14:00", "trainee": "Bruno" }
+{ "command": "jump-run", "id": "flight1" }
+
+{ "command": "request", "type": "tandem", "id": "Lol wants tandem again at 2:30", "starttime": "2007-12-02T14:30", "passenger": "Lol" }
+{ "command": "jump-run", "id": "flight3" }
+
+{ "command": "request", "type": "training", "id": "Bruno wants training again at 2:30", "starttime": "2007-12-02T14:30", "trainee": "Bruno" }
+{ "command": "jump-run", "id": "flight2" }
+
+
+{ "command": "jump-run", "id": "flight1" }
+{ "command": "jump-run", "id": "flight2" }
+{ "command": "jump-run", "id": "flight3" }
+{ "command": "jump-run", "id": "flight4" }
+{ "command": "jump-run", "id": "flight5" }
+
