@@ -14,21 +14,29 @@
 { "command": "skydiver", "skydiver": "Wow", "licence": "student"}
 
 
-{ "command": "request", "type": "tandem", "id": "Initial Tandem", "starttime": "2007-12-02T14:00", "trainee": "Lol" }
+{ "command": "request", "type": "tandem", "id": "Initial Tandem", "starttime": "2007-12-02T14:00", "passenger": "Lol" }
+{ "command": "jump-run", "id": "flight1" }
 
 { "command": "request", "type": "training", "id": "Initial Training", "starttime": "2007-12-02T14:00", "trainee": "Bruno" }
+{ "command": "jump-run", "id": "flight1" }
 
 { "command": "request", "type": "fun", "id": "Initial Fun", "starttime": "2007-12-02T14:00", "skydivers": ["Matt", "Wow"] }
+{ "command": "jump-run", "id": "flight1" }
 
 
 { "command": "request", "type": "fun", "id": "Student from Training jump wants fun, in 15 minutes", "starttime": "2007-12-02T15:00", "skydivers": ["Bruno"] }
+{ "command": "jump-run", "id": "flight5" }
+
 { "command": "request", "type": "fun", "id": "Instructor from Training jump also has to repack gear, can't make it to any", "starttime": "2007-12-02T15:00", "skydivers": ["Borat"] }
 
-{ "command": "request", "type": "tandem", "id": "Both licnesed jumper and tandem master can make it, to 10 minutes after", "starttime": "2007-12-02T15:00", "trainee": "Matt" }
+{ "command": "request", "type": "tandem", "id": "Both licensed jumper and tandem master can make it, after a 10 minutes repacking and 5 minutes briefing, to 15 minutes after", "starttime": "2007-12-02T15:00", "passenger": "Matt" }
+{ "command": "jump-run", "id": "flight5" }
 
 { "command": "request", "type": "fun", "id": "Student from Fun jump wants fun, immediately", "starttime": "2007-12-02T15:00", "skydivers": ["Wow"] }
+{ "command": "jump-run", "id": "flight2" }
 
 { "command": "request", "type": "fun", "id": "Student, here Passenger, from Tandem jump wants fun, immediately", "starttime": "2007-12-02T15:00", "skydivers": ["Lol"] }
+{ "command": "jump-run", "id": "flight2" }
 
 { "command": "jump-run", "id": "flight1" }
 { "command": "jump-run", "id": "flight2" }
