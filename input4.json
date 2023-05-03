@@ -1,0 +1,12 @@
+{ "command": "flight", "id": "flight1", "dropzone": "Picton", "starttime": "2007-12-02T10:15", "endtime": "2007-12-02T10:35", "maxload": 4 }
+{ "command": "flight", "id": "flight2", "dropzone": "Picton", "starttime": "2007-12-02T10:35", "endtime": "2007-12-02T10:45", "maxload": 4 }
+
+{ "command": "skydiver", "skydiver": "Ashesh", "licence": "tandem-master", "dropzone": "Picton"}
+{ "command": "skydiver", "skydiver": "Bruno", "licence": "student"}
+
+{ "command": "request", "type": "tandem", "id": "tandem1", "starttime": "2007-12-02T10:10", "passenger": "Bruno" }
+{ "command": "request", "type": "fun", "id": "Ashesh can't do the next jump because he is busy repacking his gear", "starttime": "2007-12-02T10:35", "skydivers": ["Ashesh"] }
+{ "command": "request", "type": "fun", "id":"fun1", "starttime": "2007-12-02T10:35", "skydivers": ["Bruno"] }
+
+{ "command": "jump-run", "id": "flight1" }
+{ "command": "jump-run", "id": "flight2" }
