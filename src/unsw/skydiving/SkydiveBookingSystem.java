@@ -512,6 +512,8 @@ public class SkydiveBookingSystem {
             // Adjusted to include briefing / debriefing timings
             jump.adjustTimeInterval(flightDuration);
 
+            boolean skydiversAreFree = true;
+
             for(Skydivers skydiver : jump.getSkydivers()) {
                 
                 TimeInterval skydiverDuration = flightDuration.clone();
@@ -524,9 +526,12 @@ public class SkydiveBookingSystem {
 
                 // If this skydiver is not free, check next flight
                 if (!skydiver.isSkydiverFree(skydiverDuration)) {
-                    continue;
+                    skydiversAreFree = false;
+                    break;
                 }
             }
+
+            if (!skydiversAreFree) {continue;}
 
             if (needTeacherAllocation) {
                 TimeInterval instructorInterval = flightDuration.clone();
