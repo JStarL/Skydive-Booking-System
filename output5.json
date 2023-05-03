@@ -1,0 +1,17 @@
+{"flight":"flight1","dropzone":"Picton","status":"success"}
+{"flight":"flight1","dropzone":"Picton","status":"success"}
+{"flight":"flight1","dropzone":"Picton","status":"success"}
+{"flight":"flight1","dropzone":"Picton","status":"success"}
+{"flight":"flight1","dropzone":"Picton","status":"success"}
+{"flight":"flight1","dropzone":"Picton","status":"success"}
+{"flight":"flight1","dropzone":"Picton","status":"success"}
+
+[
+    {"skydivers":["fun1A","fun1B","fun1C","fun1D","fun1E","fun1F"]},
+    {"skydivers":["fun3A","fun3B","fun3C","fun3D"]},
+    {"skydivers":["fun2A","fun2B"]},
+    {"instructor":"instructor1A","trainee":"instructor1B"},
+    {"instructor":"instructor2A","trainee":"instructor2B"},
+    {"passenger":"tandem2B","jump-master":"tandem1A"},
+    {"passenger":"tandem1B","jump-master":"tandem2A"}
+]

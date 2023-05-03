@@ -1,0 +1,40 @@
+{ "command": "flight", "id": "flight1", "dropzone": "Picton", "starttime": "2007-12-02T10:15", "endtime": "2007-12-02T10:35", "maxload": 999 }
+
+{ "command": "skydiver", "skydiver": "fun1A", "licence": "student"}
+{ "command": "skydiver", "skydiver": "fun1B", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "fun1C", "licence": "student"}
+{ "command": "skydiver", "skydiver": "fun1D", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "fun1E", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "fun1F", "licence": "student"}
+
+{ "command": "skydiver", "skydiver": "tandem1A", "licence": "tandem-master", "dropzone": "Picton"}
+{ "command": "skydiver", "skydiver": "tandem1B", "licence": "student"}
+
+{ "command": "skydiver", "skydiver": "instructor1A", "licence": "instructor", "dropzone": "Picton"}
+{ "command": "skydiver", "skydiver": "instructor1B", "licence": "licenced-jumper"}
+
+{ "command": "skydiver", "skydiver": "fun2A", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "fun2B", "licence": "student"}
+
+{ "command": "skydiver", "skydiver": "tandem2A", "licence": "tandem-master", "dropzone": "Picton"}
+{ "command": "skydiver", "skydiver": "tandem2B", "licence": "licensed-jumper"}
+
+{ "command": "skydiver", "skydiver": "instructor2A", "licence": "instructor", "dropzone": "Picton"}
+{ "command": "skydiver", "skydiver": "instructor2B", "licence": "student"}
+
+{ "command": "skydiver", "skydiver": "fun3A", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "fun3B", "licence": "student"}
+{ "command": "skydiver", "skydiver": "fun3C", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "fun3D", "licence": "student"}
+
+{ "command": "request", "type": "fun", "id":"fun1", "starttime": "2007-12-02T10:15", "skydivers": ["fun1A", "fun1B", "fun1C", "fun1D", "fun1E", "fun1F"] }
+{ "command": "request", "type": "tandem", "id": "tandem1", "starttime": "2007-12-02T10:10", "passenger": "tandem2B" }
+{ "command": "request", "type": "training", "id": "training1", "starttime": "2007-12-02T10:15", "trainee": "instructor1B" }
+
+{ "command": "request", "type": "fun", "id":"fun2", "starttime": "2007-12-02T10:15", "skydivers": ["fun3A", "fun3B", "fun3C", "fun3D"] }
+{ "command": "request", "type": "tandem", "id": "tandem1", "starttime": "2007-12-02T10:10", "passenger": "tandem1B" }
+{ "command": "request", "type": "training", "id": "training1", "starttime": "2007-12-02T10:15", "trainee": "instructor2B" }
+
+{ "command": "request", "type": "fun", "id":"fun3", "starttime": "2007-12-02T10:15", "skydivers": ["fun2A", "fun2B"] }
+
+{ "command": "jump-run", "id": "flight1" }
