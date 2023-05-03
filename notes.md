@@ -22,14 +22,18 @@ Entities:
 
 - Jumps
     - 3 types:
-        - Tandem - 2 Passengers"
+        - Tandem - 2 Passengers
+            - 5 minute briefing before flight
             - Tandem Master: Repacks gear
             - Passenger: 
                 - Attached to above
                 - has no gear of own
                 - Doesn't repack
         - Fun-Jump
-        - Training
+        - Training - 2 passengers
+            - 15 minute debriefing after flight
+            - Instructor: Debriefs, then repacks gear
+            - Student: Skydiver of whatever classification, debriefs, then repacks depending on classification
     - Num. Skydivers
 
 - JSON Parser
@@ -54,9 +58,14 @@ Info:
 - Parachutes require *10 minutes* to repack
 - Overall sequence:
     - (Briefing) Jump (Debriefing) (Repacking)
+- System needs some way of recording that...
+    - Skydiver X is booked for ... intervals
 
 Qs:
 - Under what *circumstances* is a skydiver a student?
 - Under what *conditions* does a skydiver **not** have to repack?
 - What are the *properties* of a student?
 - For student, superclass or interface?
+- How does the booking system allocate: skydiver -> flight?
+    - Via "time"
+    - Extras like, max. capacity...
