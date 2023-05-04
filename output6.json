@@ -1,0 +1,10 @@
+{"flight":"flight1","dropzone":"Picton","status":"success"}
+{"flight":"flight2","dropzone":"Picton","status":"success"}
+{"flight":"flight2","dropzone":"Picton","status":"success"}
+{"flight":"flight3","dropzone":"Picton","status":"success"}
+{"status":"rejected"}
+
+[{"skydivers":["jumper1"]}]
+[{"skydivers":["jumper4","jumper5","jumper6"]},{"skydivers":["jumper2","jumper3"]}]
+[{"skydivers":["jumper10","jumper11","jumper12","jumper7","jumper8","jumper9"]}]
+[]

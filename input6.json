@@ -1,0 +1,40 @@
+{ "command": "flight", "id": "flight1", "dropzone": "Picton", "starttime": "2007-12-02T10:15", "endtime": "2007-12-02T10:35", "maxload": 2 }
+{ "command": "flight", "id": "flight2", "dropzone": "Picton", "starttime": "2007-12-02T10:25", "endtime": "2007-12-02T10:40", "maxload": 5 }
+{ "command": "flight", "id": "flight3", "dropzone": "Picton", "starttime": "2007-12-02T10:40", "endtime": "2007-12-02T11:00", "maxload": 6 }
+{ "command": "flight", "id": "flight4", "dropzone": "Picton", "starttime": "2007-12-02T10:45", "endtime": "2007-12-02T11:10", "maxload": 7 }
+
+{ "command": "skydiver", "skydiver": "jumper1", "licence": "licenced-jumper"}
+
+{ "command": "skydiver", "skydiver": "jumper2", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "jumper3", "licence": "licenced-jumper"}
+
+{ "command": "skydiver", "skydiver": "jumper4", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "jumper5", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "jumper6", "licence": "licenced-jumper"}
+
+{ "command": "skydiver", "skydiver": "jumper7", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "jumper8", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "jumper9", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "jumper10", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "jumper11", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "jumper12", "licence": "licenced-jumper"}
+
+{ "command": "skydiver", "skydiver": "jumper13", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "jumper14", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "jumper15", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "jumper16", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "jumper17", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "jumper18", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "jumper19", "licence": "licenced-jumper"}
+{ "command": "skydiver", "skydiver": "jumper20", "licence": "licenced-jumper"}
+
+{ "command": "request", "type": "fun", "id": "fun in flight1", "starttime": "2007-12-02T10:15", "skydivers": ["jumper1"] }
+{ "command": "request", "type": "fun", "id": "fun in flight2", "starttime": "2007-12-02T10:15", "skydivers": ["jumper2", "jumper3"] }
+{ "command": "request", "type": "fun", "id": "fun in flight2 again", "starttime": "2007-12-02T10:15", "skydivers": ["jumper4", "jumper5", "jumper6"] }
+{ "command": "request", "type": "fun", "id": "fun in flight3", "starttime": "2007-12-02T10:15", "skydivers": ["jumper7", "jumper8", "jumper9", "jumper10", "jumper11", "jumper12"] }
+{ "command": "request", "type": "fun", "id": "no fun in flight4", "starttime": "2007-12-02T10:15", "skydivers": ["jumper13", "jumper14", "jumper15", "jumper16", "jumper17", "jumper18", "jumper19", "jumper20"] }
+
+{ "command": "jump-run", "id": "flight1" }
+{ "command": "jump-run", "id": "flight2" }
+{ "command": "jump-run", "id": "flight3" }
+{ "command": "jump-run", "id": "flight4" }
