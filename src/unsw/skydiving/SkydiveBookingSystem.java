@@ -195,6 +195,22 @@ public class SkydiveBookingSystem {
         return divers;
     }
 
+    private JSONObject getOutputJsonObject(Jumps jump) {
+        JSONObject obj = new JSONObject();
+
+        if (jump != null) {
+            // Sucess JSON Object
+            Flights allocatedFlight = jump.getFlight();
+            obj.put("flight", allocatedFlight.getId());
+            obj.put("dropzone", allocatedFlight.getDropzone().getName());
+            obj.put("status", "success");
+        } else {
+            // Failure JSON Object
+            obj.put("status", "rejected");
+        }
+
+        return obj;
+    } 
 
     /**
      * Given the JSONObject input from stdin,
@@ -208,7 +224,6 @@ public class SkydiveBookingSystem {
         String id, type;
         LocalDateTime startTime, endTime;
         ArrayList<String> divers;
-        JSONObject obj;
         Jumps jump;
         switch (json.getString("command")) {
 
@@ -255,21 +270,9 @@ public class SkydiveBookingSystem {
                     break;
             }
 
-            obj = new JSONObject();
             jump = makeRequest(id, type, startTime, divers);
-            
-            if (jump != null) {
-                // Sucess JSON Object
-                Flights allocatedFlight = jump.getFlight();
-                obj.put("flight", allocatedFlight.getId());
-                obj.put("dropzone", allocatedFlight.getDropzone().getName());
-                obj.put("status", "success");
-            } else {
-                // Failure JSON Object
-                obj.put("status", "rejected");
-            }
 
-            System.out.println(obj.toString());
+            System.out.println(getOutputJsonObject(jump).toString());
             break;
         
         case "cancel":
@@ -297,20 +300,9 @@ public class SkydiveBookingSystem {
                     break;
             }
 
-            obj = new JSONObject();
             jump = changeRequest(id, type, startTime, divers);
-            if (jump != null) {
-                // Sucess JSON Object
-                Flights allocatedFlight = jump.getFlight();
-                obj.put("flight", allocatedFlight.getId());
-                obj.put("dropzone", allocatedFlight.getDropzone().getName());
-                obj.put("status", "success");
-            } else {
-                // Failure JSON Object
-                obj.put("status", "rejected");
-            }
             
-            System.out.println(obj.toString());
+            System.out.println(getOutputJsonObject(jump).toString());
             break;
         
         case "jump-run":
